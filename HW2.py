@@ -14,6 +14,10 @@ def factorial(n):
 def combo_no_rep(n, r):
     return (factorial(n) / (factorial(r) * factorial(n-r)))
 
+x = combo_no_rep(5,2)
+y = math.exp((50/0.01))
+print(x)
+
 
 p = 1/(365)**2
 r = 3
@@ -90,8 +94,8 @@ nxy = np.array(
 Ih = Ihat(nxy)
 print(f"Ih = {Ih}")
 
-for i in range(10):
-    M = 100
-    Ihm = sim(M, nxy)
-    Is = Ihmstar(Ihm)
-    print(f"Is = {Is}")
+# for i in range(10):
+#     M = 100
+#     Ihm = sim(M, nxy)
+#     Is = Ihmstar(Ihm)
+#     print(f"Is = {Is}")
