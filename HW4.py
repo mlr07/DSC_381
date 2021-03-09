@@ -11,4 +11,4 @@ p_hat = X / n
 
 print(f"population n = {n}")
 print(f"sample X = {X}")
-print(f"p hat = {p_hat:.2f}")
+print(f"p hat = {p_hat:.3f}")
