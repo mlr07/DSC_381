@@ -1,6 +1,7 @@
 # NOTE: 
 # the sympy method gives the sharpest chernoff bound 
 # the latex like equation print might need jupyter/ipython
+# check forms of the two given sympy equations
 
 from timer import Timer
 import numpy as np
@@ -42,7 +43,7 @@ a = 55
 p = .5
 q = 1-p
 d = sp.symbols(('d'))
-f = ((q+p*sp.exp(d))**n) * (sp.exp(-d*a))
+f = ((q+p*sp.exp(d))**n) * (sp.exp(-d*a)) 
 
 Pr_X_sp = chernoff_min(f)
 print(f"Pr_X_sp bound: {Pr_X_sp}")
