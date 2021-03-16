@@ -25,7 +25,7 @@ print(f"Pr_X_chernoff: {Pr_X_chernoff:.3f}")
 
 # 1
 # sympy chernoff bound (sharp)
-@Timer(name="decorator")
+@Timer(name="decorator", text="Total time: {:0.4f} seconds")
 def chernoff_min(f):   
     f1 = sp.diff(f, d)
     f1_eq = sp.Eq(f1, 0)
@@ -44,11 +44,22 @@ f = ((q+p*sp.exp(d))**n) * (sp.exp(-d*a))
 Pr_X_sp = chernoff_min(f)
 print(f"Pr_X_sp bound: {Pr_X_sp}")
 
+n = 100
+a = 60
+p = .5
+q = 1-p
+d = sp.symbols(('d'))
+f = ((q+p*sp.exp(d))**n) * (sp.exp(-d*a)) 
+
+Pr_X_sp_2 = chernoff_min(f)
+print(f"Pr_X_sp_2 bound: {Pr_X_sp_2}")
+
 # 1
 # check work with sympy
-with Timer(name="context manager"):
+with Timer(text="run time: {:0.3f}"):
     f_prime = sp.diff((p+p*sp.exp(t))**n/sp.exp(t*a), t)
     solve_t = sp.solve(f_prime, t)
     print(solve_t)
 
+print(Timer.timers)
 

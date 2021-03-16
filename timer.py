@@ -12,11 +12,15 @@ class TimerError(Exception):
 class Timer(ContextDecorator):
     """Time your code using a class, context manager, or decorator"""
 
-    # use typing to define variables
+    # internal class dict to hold times
     timers: ClassVar[Dict[str, float]] = dict()
+    # name of each timer created, if no name given... it is not stored in timers.
     name: Optional[str] = None
-    text: str = "Elapsed time: {:0.4f} seconds"
+    # text to print via log
+    text: str = "Elapsed time: {:0.3f} seconds"
+    # typed call to print function
     logger: Optional[Callable[[str], None]] = print
+    # interal time variable. how does field work?
     _start_time: Optional[float] = field(default=None, init=False, repr=False)
 
 
@@ -43,15 +47,17 @@ class Timer(ContextDecorator):
         elapsed_time = time.perf_counter() - self._start_time
         self._start_time = None
 
-        # Report elapsed time
+        # report the logged time with print
         if self.logger:
             self.logger(self.text.format(elapsed_time))
+        # accumulate time in the mapped key
         if self.name:
             self.timers[self.name] += elapsed_time
 
+        # probably returned if time needs to be assigned
         return elapsed_time
 
-
+    # why does it return "Timer"? 
     def __enter__(self) -> "Timer":
         """Start a new timer as a context manager"""
         self.start()
