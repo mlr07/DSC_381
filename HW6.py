@@ -2,6 +2,7 @@
 # the sympy method gives the sharpest chernoff bound 
 # the latex like equation print might need jupyter/ipython
 # check forms of the two given sympy equations
+# think of some tests for timer class
 
 from timer import Timer
 import numpy as np
