@@ -49,3 +49,25 @@ Matrix([[1,2],[2,2]]).eigenvals()
 
 # %%
 latex(Integral(cos(x)**2, (x, 0, pi)))
+
+# %%
+a = (x+1)**2
+b = x**2+ 2*x + 1
+c = x**2 - 2*x + 1
+print(simplify(a-b))
+print(simplify(a-c))
+
+# %%
+a = cos(x)**2 - sin(x)**2
+b = cos(2*x)
+a.equals(b)
+
+# %%
+True ^ True
+False ^ False
+True ^ False
+
+# %%
+print(x + Rational(1,2))
+print(x + 1/2)
+# %%
