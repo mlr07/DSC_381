@@ -7,6 +7,7 @@ from sympy import *
 import numpy as np
 
 # %%
+### INTRO ###
 # print str
 print(sympy.sqrt(3))
 print(sympy.sqrt(8))
@@ -50,6 +51,7 @@ Matrix([[1,2],[2,2]]).eigenvals()
 # output LaTeX
 latex(Integral(cos(x)**2, (x, 0, pi)))
 
+### GOTCHAS ###
 # simplify for equality
 a = (x+1)**2
 b = x**2+ 2*x + 1
@@ -57,7 +59,7 @@ c = x**2 - 2*x + 1
 print(simplify(a-b))
 print(simplify(a-c))
 
-# eqaulity method
+# equality method
 a = cos(x)**2 - sin(x)**2
 b = cos(2*x)
 a.equals(b)
@@ -71,6 +73,7 @@ True ^ False
 print(x + Rational(1,2))
 print(x + 1/2)
 
+### BASIC OPERATIONS ###
 # substitution
 x, y, z = symbols("x y z")
 expr = cos(x) + 1 # immutable
@@ -97,6 +100,7 @@ replace = [(x**i, y**i) for i in range(5) if i % 2 == 0]
 print(replace)
 expr.subs(replace)
 
+### PRINTING ###
 # convert strings to expressions
 str_expr = "x**2 + 3*x - 1/2"
 expr = sympify(str_expr)
@@ -136,8 +140,52 @@ print(srepr(expr))
 # pretty print with unicode
 pprint(expr, use_unicode=True)
 
+### SIMPLIFICATION ###
+# simplify
+x, y, z = symbols("x y z")
+init_printing(use_unicode=True)
+
+simplify(sin(x)**2 + cos(x)**2)
+simplify((x**3 + x**2 - x - 1)/(x**2 + 2*x + 1))
+simplify(gamma(x) / gamma(x-2)) # gamma function for complex factorials
+
+# simplify pitfalls
+expr = x**2 + 2*x + 1  # want factored form
+simplify(expr)  # chooses simplest form
+factor(expr)   # apply specific simplification
+
+# expand polynomial/rational function
+expand((x + 1)**2)
+expand((x + 2)*(x - 3))
+expand((x + 1)*(x - 2) - x*(x - 1))  # expanded terms cancel
+
+# factor polynomial/rational function
+factor(x**3 - x**2 + x - 1)
+factor(x**2*z + 4*x*y*z + 4*y**2*z)
+
+# factor list
+factor_list(x**2*z + 4*x*y*z + 4*y**2*z)
+
+# expand and factor
+expr = (cos(x) + sin(x))**2
+expand(expr)
+factor(expr)
+
+# collect powers into common terms
+expr = x*y + x - 3 + 2*x**2 - z*x**2 + x**3
+expr_coll = collect(expr, x)
+expr_coll
+
+# collect specific coefficients
+expr_coll.coeff(x, 2)
+
+# cancel rational functions to canonical q/p
+cancel((x**2 + 2*x + 1) / (x**2 + x))
+expr = 1/x + (3*x/2 - 2)/(x - 4)
+cancel(expr)
+
 # %%
-p, t, n, a = symbols("p t n a")
-f_prime = diff((p+p*exp(t))**n/exp(t*a), t)
-solve_t = solve(f_prime, t)
-solve_t
+# cancel and factor 
+expr = (x*y**2 - 2*x*y*z + x*z**2 + y**2 - 2*y*z + z**2)/(x**2 - 1)
+cancel(expr)
+factor(expr)

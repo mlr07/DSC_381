@@ -1,7 +1,6 @@
 # NOTE: 
 # the sympy method gives the sharpest chernoff bound 
-# the latex like equation print might need jupyter/ipython
-# check forms of the two given sympy equations
+# latex equation print needs ipython  
 # think of some tests for timer class
 
 from timer import Timer
@@ -63,4 +62,9 @@ with Timer(text="run time: {:0.3f}"):
     print(solve_t)
 
 print(Timer.timers)
+
+p, t, n, a = symbols("p t n a")
+f_prime = diff((p+p*exp(t))**n/exp(t*a), t)
+solve_t = solve(f_prime, t)
+solve_t
 
