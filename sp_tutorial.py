@@ -184,8 +184,86 @@ cancel((x**2 + 2*x + 1) / (x**2 + x))
 expr = 1/x + (3*x/2 - 2)/(x - 4)
 cancel(expr)
 
-# %%
-# cancel and factor 
+# cancel and factor rational function
 expr = (x*y**2 - 2*x*y*z + x*z**2 + y**2 - 2*y*z + z**2)/(x**2 - 1)
 cancel(expr)
 factor(expr)
+
+# partial fraction decomposition with apart
+x = symbols("x")
+expr = (4*x**3 + 21*x**2 + 10*x + 12)/(x**4 + 5*x**3 + 5*x**2 + 4*x)
+expr
+apart(expr)
+
+### TRIG ###
+# trig simplification
+cos(acos(x))
+asin(1)
+
+# trigsimp
+trigsimp(sin(x)**2  + cos(x)**2)
+trigsimp(sin(x)**4 - 2*cos(x)**2*sin(x)**2 + cos(x)**4)
+trigsimp(cosh(x)**2 + sinh(x)**2)
+
+# expand_trig
+x, y = symbols("x y")
+expand_trig(sin(x+y))
+expand_trig(tan(2*x))
+
+# reverse trig identities
+trigsimp(sin(x)*cos(y) + sin(y)*cos(x))
+
+### POWERS ###
+# symbol assumptions
+x, y = symbols("x y", positive=True)
+a, b = symbols("a b", real=True)
+z, t, c = symbols("z t c")
+
+# powsimp
+powsimp(x**a*x**b)  # pow idnty 1
+powsimp(x**a*y**a)  # pow idnty 2
+powsimp(t**c*z**c)  # not valid
+powsimp(t**c*z**c, force=True)  # force simp
+
+# auto powsimp
+(z*t)**2
+sqrt(x*y)
+
+# expand power exp and base
+expand_power_exp(x**(a + b))
+expand_power_base((x*y)**a)
+expand_power_base((z*t)**c) # not valid
+expand_power_base((z*t)**c, force=True) # force expand
+
+# auto expand exp
+x**2*x**3
+
+# powdenest
+powdenest((x**a)**b)  # pow idnty 3
+powdenest((z**a)**b)  # not valid
+powdenest((z**a)**b, force=True)  # force it
+
+### EXP AND LOG ###
+# log asssumptions
+# %%
+x, y = symbols("x y", positive=True)
+n = symbols("n", real=True)
+z, t = symbols("z t")
+
+# expand log
+expand_log(log(x*y))  # log idnty 1
+expand_log(log(x/y))  # log idnty 1/2
+expand_log(log(x**2))  # log idnty 2
+expand_log(log(x**n))  # log idnty 2
+expand_log(log(z*t))  # not valid
+expand_log(log(z*t), force=True)  # force it
+
+# combine log
+logcombine(log(x) + log(y))
+logcombine(log(x) - log(y))
+logcombine(n*log(x) + log(y))
+
+# exp
+expand_log(log(exp(x)))
+logcombine(log(exp(x)))
+
