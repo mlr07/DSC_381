@@ -245,7 +245,6 @@ powdenest((z**a)**b, force=True)  # force it
 
 ### EXP AND LOG ###
 # log asssumptions
-# %%
 x, y = symbols("x y", positive=True)
 n = symbols("n", real=True)
 z, t = symbols("z t")
@@ -267,3 +266,87 @@ logcombine(n*log(x) + log(y))
 expand_log(log(exp(x)))
 logcombine(log(exp(x)))
 
+### CALCULUS ###
+# derivatives with diff
+x, y, z = symbols("x y z")
+diff(cos(x))
+diff(exp(x**2), x)
+
+# higher order diff
+diff(x**4, x, x, x)
+diff(x**4, x, 3)
+
+expr = exp(x*y*z)
+diff(expr, x, y, y, z, z, z, z)
+
+# diff as a method
+expr.diff(x, y, 2, z, 4)
+
+# unevaluated derivative
+Derivative(expr, x, y, y, z, 4)
+
+# higher order derivative from tuple
+m, n, a, b = symbols("m n a b")
+expr = (a*x + b)**m
+expr.diff((x, n))
+
+# indefinate integral
+integrate(sin(x), x)  # primitive anitderivative
+integrate(cos(x), x)  # primitive antiderivative
+
+# definate integral
+integrate(sin(x), (x, 0, 1))
+integrate(cos(x), (x, 0, 1))
+expr = Integral(exp(-x), (x, 0, oo))
+expr.doit()
+
+# double integral
+expr = Integral(exp(-x**2 - y**2), (x, -oo, oo), (y, -oo, oo))
+expr.doit()
+
+# undefined integral
+expr = integrate(x**x, x)
+expr
+
+# unevaluated integral
+expr = Integral(log(x)**2, x)
+expr.doit()
+
+# evaluate a hard integral
+expr = Integral(sin(x**2), x)
+expr.doit()
+expr = Integral(cos(x**2), x)
+expr.doit()
+
+# %%
+# piecewise integral
+expr = Integral(x**y*exp(-x), (x, 0, oo))
+expr.doit()
+
+# limits
+limit(sin(x)/x, x, 0)
+
+# limits for singularity
+expr = x**2/exp(x)
+expr.subs(x, oo)
+limit(expr, x, oo)
+
+# unevaluated limit
+expr = Limit((cos(x)-1)/x, x, 0)
+expr.doit()
+
+# evaluate limit at one side
+limit(1/x, x, 0, "+")
+limit(1/x, x, 0, "-")
+
+# series expansion
+expr = exp(sin(x))
+expr.series(x, 0, 4).removeO()  # remove O
+
+# finite difference
+f, g = symbols("f g", cls=Function)
+differentiate_finite(f(x)*g(x))
+
+f = Function("f")
+dfdx = f(x).diff(x)
+dfdx.as_finite_difference()
