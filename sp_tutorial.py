@@ -318,7 +318,6 @@ expr.doit()
 expr = Integral(cos(x**2), x)
 expr.doit()
 
-# %%
 # piecewise integral
 expr = Integral(x**y*exp(-x), (x, 0, oo))
 expr.doit()
@@ -350,3 +349,40 @@ differentiate_finite(f(x)*g(x))
 f = Function("f")
 dfdx = f(x).diff(x)
 dfdx.as_finite_difference()
+
+### SOLVERS ###
+# apply equalities to eqns
+x, y, z = symbols("x y z")
+
+Eq(x**2 - 1, 1)
+solveset(Eq(x**2, 1), x)
+
+solveset(Eq(x**2 - 1, 0), x)
+solveset(x**2 - 1, x)  # eqaul to zero assumed
+
+# solving functions with algebra
+solveset(x**2 - x, x)
+solveset(x - x, x, domain=S.Reals)
+solveset(sin(x) - 1, x, domain=S.Reals)
+
+# no solution
+solveset(exp(x), x)  # no soln
+solveset(cos(x) - x, x)  # can't find soln
+
+# solve system of linear equations
+linsolve([x + y + 1, x + y + 2*z - 3], (x,y,z))  # list of eqns
+linsolve(Matrix(([1,1,1,1], [1,1,2,3])), (x,y,z))  # augmented matrix
+
+# A*x = b form
+M = Matrix(((1,1,1,1), (1,1,2,3)))
+system = A, b = M[:, :-1], M[:, -1]
+linsolve(system, (x,y,z))  
+
+# %%
+# solve differential equation
+f, g = symbols("f g", cls=Function)
+diffeq = Eq(f(x).diff(x, x) - 2*f(x).diff(x) + f(x), sin(x))
+diffeq
+dsolve(diffeq, f(x))
+
+dsolve(f(x).diff(x)*(1-sin(f(x)))-1, f(x))
