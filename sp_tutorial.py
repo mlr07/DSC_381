@@ -267,6 +267,7 @@ expand_log(log(exp(x)))
 logcombine(log(exp(x)))
 
 ### CALCULUS ###
+# %%
 # derivatives with diff
 x, y, z = symbols("x y z")
 diff(cos(x))
