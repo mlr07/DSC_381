@@ -34,7 +34,7 @@ q = 1-p
 d = symbols(('d'))
 f = ((q+p*exp(d))**n) * (exp(-d*a)) 
 
-# differentate 
+# differentate
 f1 = diff(f, d)
 # equate to zero
 f1_eq = Eq(f1, 0)
