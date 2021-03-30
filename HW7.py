@@ -1,4 +1,3 @@
-# %%
 import numpy as np
 import pacal as pc
 from sympy import symbols, Integral, Derivative, Eq
@@ -8,12 +7,10 @@ from IPython.display import Latex, display
 # NOTE figure out how to define symbol types
 # NOTE figure out how to combine latex and sympy expressions
 
-# %%
-
 # 1: ans = f
 # with pacal from tobor
-X = pc.UniformDistr(0,1)
-Y = pc.UniformDistr(0,1)
+X = pc.UniformDistr(0, 1)
+Y = pc.UniformDistr(0, 1)
 W = X-Y
 W_pdf = W.pdf(-0.2)
 print(f"W(-0.2) = {W_pdf:.3f}")
@@ -29,7 +26,6 @@ denom = Integral(1, (u, 0, 1/3)) + Integral(1, (u, 2/3, 1))
 PDF_b = numer / denom
 print(PDF_b.doit())
 
-# %%
 # 3: ans = b
 # analytical solution derived by hand
 Pr_AB_meet = 1 - ((2*1/2*45*45) / (60*60))
@@ -58,10 +54,6 @@ std_p = np.std(p_runs)
 print(f"Mean P(meet) = {mean_p:.3f}")
 print(f"STD P(meet) = {std_p:.3f}")
 
-# %%
-# print(f"Met {meet_count} times out of {NUM_TRIALS} trials")
-# print(f"P(meeting)={p_meet:.3f}")
-
 # 4a: ans = c, proof
 
 # 4b: ans = d, proof
@@ -78,4 +70,3 @@ display(ans_a)
 
 # 6: ans = b, proof
 
-# %%
