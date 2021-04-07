@@ -1,5 +1,9 @@
+# %%
 import pandas as pd
 from statistics import mean
+from IPython.display import Latex, display
+
+# NOTE: clean up print and proporitons
 
 
 def runner(runs:list=None, q:str=None) -> None:
@@ -21,10 +25,8 @@ data = "./data/SalaryGender.csv"
 df = pd.read_csv(data)
 # h_null = 50
 # h_alt <= 50
-print(df.columns)
 print(df["Age"].mean())
-runs = round(mean([0.021, 0.021, 0.020, 0.019, 0.021, 0.021]), 4)
-print(runs)
+runner([0.021, 0.021, 0.020, 0.019, 0.021, 0.021], "1")
 
 
 # 2
@@ -32,8 +34,7 @@ print(runs)
 data = "./data/StudentSurvey.csv"
 df = pd.read_csv(data)
 df["MathSAT"].to_csv("./data/MathSAT.csv", index=False)
-runs = round(mean([615.326-603.58, 615.334-603.526, 615.251-603.503, 615.282-603.450]))
-print(runs)
+runner([615.326-603.58, 615.334-603.526, 615.251-603.503, 615.282-603.450], "2")
 
 
 # 3
@@ -75,8 +76,7 @@ count = sum(placebo["Relapse"] == "no")
 p_no_relapse =  round(count / sample, 3)
 print(sample, count, p_no_relapse)
 
-runs = round(mean([0.110, 0.111, 0.112, 0.108]),3)
-print(runs)
+runner([0.110, 0.111, 0.112, 0.108], "4")
 
 
 # 5 
@@ -155,5 +155,15 @@ df[["Age"]].to_csv("./data/Q9_SalaryGender.csv", index=False)
 runner([53.5-44.5, 53.5-44.5, 53.5-44.5], "9")
 
 
+# 10
+data = "./data/StudentSurvey.csv"
+df = pd.read_csv(data)
+df[["Weight", "SAT", "Pulse", "GPA", "BirthOrder", "Exercise"]].to_csv("./data/Q10_StudentSurvey.csv", index=False)
 
 
+# 11
+# LaTeX for statement of hypothesis test
+statement = Latex(r"$\Pr(p > 0.50 \mid H_{0} = True)$")
+display(statement)
+
+# %%
