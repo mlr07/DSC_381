@@ -4,7 +4,7 @@ from statistics import mean
 from IPython.display import Latex, display
 
 # NOTE: clean up print and proporitons
-
+# %%
 
 def runner(runs:list=None, q:str=None) -> None:
     """
@@ -154,16 +154,33 @@ df[["Age"]].to_csv("./data/Q9_SalaryGender.csv", index=False)
 # track statkey runs
 runner([53.5-44.5, 53.5-44.5, 53.5-44.5], "9")
 
-
+# %%
 # 10
 data = "./data/StudentSurvey.csv"
-df = pd.read_csv(data)
-df[["Weight", "SAT", "Pulse", "GPA", "BirthOrder", "Exercise"]].to_csv("./data/Q10_StudentSurvey.csv", index=False)
+df = pd.read_csv(data).dropna()
+df = df[["Weight", "SAT", "Pulse", "GPA", "BirthOrder", "Exercise"]]
+df.to_csv("./data/Q10_StudentSurvey.csv", index=False)
 
+print(df.describe())
+
+# test stats
+sat = "n = 357, r = 0.049, slope = +0.012, intercept = +142.28"
+pulse = "n = 357, r = 0.0084, slope = +0.020, intercept = +158.47"
+gpa = "n = 340, r = -0.192, slope = -14.929, intercept = +207.01"
+birth = "n = 354, r = -0.056, slope = -1.892, intercept = +164.62"
+exercise = "n = 356, r = 0.159, slope = +0.933, intercept = +152.23"
+
+# p values
+sat = [0.016, -0.042]
+pulse = [-0.038, -0.600]
+gpa = [-7.978, -25.966]
+birth = [1.802, -3.545]
+exercise = [1.296, 0.072]
+
+# %%
 
 # 11
 # LaTeX for statement of hypothesis test
 statement = Latex(r"$\Pr(p > 0.50 \mid H_{0} = True)$")
 display(statement)
 
-# %%
