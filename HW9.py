@@ -119,6 +119,7 @@ print(f"lithium: count = {lithium_count}, sample size = {lithium_sample}")
 runner([0.500-0.167, 0.500-0.167, 0.500-0.167], "6")
 
 
+# FIXME
 # 7
 # find 92% confidence for slope coeff between salary and age
 data = "./data/SalaryGender.csv"
@@ -154,7 +155,8 @@ df[["Age"]].to_csv("./data/Q9_SalaryGender.csv", index=False)
 # track statkey runs
 runner([53.5-44.5, 53.5-44.5, 53.5-44.5], "9")
 
-# %%
+
+# FIXME
 # 10
 data = "./data/StudentSurvey.csv"
 df = pd.read_csv(data).dropna()
@@ -177,10 +179,63 @@ gpa = [-7.978, -25.966]
 birth = [1.802, -3.545]
 exercise = [1.296, 0.072]
 
-# %%
-
 # 11
 # LaTeX for statement of hypothesis test
 statement = Latex(r"$\Pr(p > 0.50 \mid H_{0} = True)$")
 display(statement)
 
+
+##### from mykl #####
+
+# hypothesis test a mean 
+
+import pandas as pd
+import numpy as np
+
+size = data.shape[0]
+
+# Randomization method for null case
+n = 50000
+mu_null = 50
+mu_sample = np.mean(data)
+mu_shift = mu_null - mu_sample
+data_shift = data+mu_shift
+
+# Bootstrap sample
+rng = np.random.default_rng()
+b_array = np.empty(0)
+
+for _ in range(n):
+    b_data = rng.choice(data_shift, size, replace=True)
+    b_mean = np.mean(b_data)
+    b_array = np.append(b_array, b_mean)
+
+# Tested condition for p_value
+p_val = np.mean(mu_sample>=b_array)
+
+
+# confidence interval for a mean
+import pandas as pd
+import numpy as np
+
+# Randomization method for null case
+
+n = 20000
+size = data.shape[0]
+mu_sample = np.mean(data)
+
+# Bootstrap sample
+rng = np.random.default_rng()
+b_array = np.empty(0)
+
+for _ in range(n):
+    b_data = rng.choice(data, size, replace = True)
+    b_mean = np.mean(b_data)
+    b_array = np.append(b_array, b_mean)
+
+# Confidence Interval
+l_tail = 5
+r_tail = 95
+ci = np.percentile(b_array, l_tail), np.percentile(b_array, r_tail)
+
+print(f'Confidence Interval ({l_tail/100} to {r_tail/100}): ({ci[0]:.3f} to {ci[1]:.3f}), length {ci[1] - ci[0]:.3f}')
