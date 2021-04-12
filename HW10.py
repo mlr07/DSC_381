@@ -200,4 +200,40 @@ print("random 83% CI: 0.29")
 # make wetsuit_mod2  --> difference of matched pairs
 
 
-# %% 11
+# %% 11 / 12 sample size for one proportion
+
+def n_bulbs(ci, me, p_sample):
+    "for proportion: find N required for CI and ME"
+    ci_ = 1 - ((1 - ci) / 2)
+    z_star = stats.norm.ppf(ci_)
+    n = np.ceil((z_star / me)**2 * p_sample*(1 - p_sample))
+    print(f"N bulbs for {p_sample} defect proportion: z_star = {z_star}, n = {n}")
+
+
+ci = 0.90
+me = 0.02
+p_base = 0.50
+p_sample = 0.06
+
+n_bulbs(ci, me, p_base)
+n_bulbs(ci, me, p_sample)
+
+
+# %% 13 sample size for one mean
+
+def n_flights(ci, me, sd_sample):
+    "for mean: find N required for CI and ME"
+    ci_ = 1 - ((1 - ci) / 2)
+    z_star = stats.norm.ppf(ci_)
+    n = np.ceil(((z_star * sd_sample) / me)**2)
+    print(f"N flights for {ci}% CI and {me} min ME: z_star = {z_star}, n = {n}")
+
+
+ci = 0.99
+me = 3  # min
+sd_sample = 9.34  # min
+
+n_flights(ci, me, sd_sample)
+
+
+# %%
