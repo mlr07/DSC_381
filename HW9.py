@@ -73,7 +73,7 @@ df = pd.read_csv(data)
 placebo = df[df["Drug"]=="Placebo"]
 sample = len(placebo)
 count = sum(placebo["Relapse"] == "no")
-p_no_relapse =  round(count / sample, 3)
+p_no_relapse = round(count / sample, 3)
 print(sample, count, p_no_relapse)
 
 runner([0.110, 0.111, 0.112, 0.108], "4")
