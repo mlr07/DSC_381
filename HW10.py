@@ -5,6 +5,8 @@ import scipy.stats as stats
 import matplotlib.pyplot as plt
 from statsmodels.stats.proportion import proportions_ztest
 from statsmodels.stats.proportion import proportion_confint
+from IPython import display
+import seaborn as sns
 
 
 # %% 1 (HW9 redo)
@@ -236,4 +238,69 @@ sd_sample = 9.34  # min
 n_flights(ci, me, sd_sample)
 
 
+# %% 14 / 15 / 16
+data = pd.read_csv("./data/ImmuneTea.csv")
+
+tea = data[data["Drink"] == "Tea"].iloc[:,0].to_numpy()
+coffee = data[data["Drink"] == "Coffee"].iloc[:,0].to_numpy()
+
 # %%
+sns.displot(tea, color='darkcyan', bins=10, kde=True)
+plt.title(f"Tea n = {len(tea)}", y=1.015, fontsize=15)
+plt.xlabel("InterferonGamma", labelpad=12)
+plt.ylabel("Count", labelpad=12)
+
+# %%
+sns.displot(coffee, color='crimson', bins=10, kde=True)
+plt.title(f"Coffee n = {len(coffee)}", y=1.015, fontsize=15)
+plt.xlabel("InterferonGamma", labelpad=12)
+plt.ylabel("Count", labelpad=12)
+
+# %%
+sns.boxplot(x=tea, color='darkcyan', saturation=0.8)
+plt.title(f"Tea n = {len(tea)}", y=1.015)
+plt.xlabel("InterferonGamma", labelpad=12)
+
+# %%
+sns.boxplot(x=coffee, color='crimson', saturation=0.8)
+plt.title(f"Coffee n = {len(coffee)}", y=1.015)
+plt.xlabel("InterferonGamma", labelpad=12)
+
+# %%
+if (len(tea) >= 30 and len(coffee) >= 30):
+    print("conditions met to use normal distn.")
+elif len(tea) + len(coffee) >= 30:
+    print("conditions met to use normal distn.")
+else:
+    print("conditions not met... use caution.") 
+
+# %%
+# difference of means for InterferonGamma between 
+# h_null = mean_tea == mean_coffee
+# h_alt = mean_tea != mean_coffee
+
+def diff_mean_t_tests(sample1, sample2):
+
+    X_bar1 = np.mean(sample1)
+    sd1 = np.std(sample1, ddof=1)
+    n1 = len(sample1)
+
+    X_bar2 = np.mean(sample2)
+    sd2 = np.std(sample2, ddof=1)
+    n2 = len(sample2)
+
+    df = n1 + n2 - 2
+
+    std_err = np.sqrt((sd1**2/n1) + (sd2**2/n2))
+    t = ((X_bar1 - X_bar2) - 0) / std_err
+    pval =  (1 - stats.t.cdf(t, df=df)) * 2   # 2 tail
+    return t, pval
+
+
+t, pval = diff_mean_t_tests(tea, coffee)
+t_sci, pval_sci = stats.ttest_ind(a=tea, b=coffee, equal_var=False, nan_policy="omit")
+
+print(f"tea = {np.mean(tea)}, {np.std(tea, ddof=1)}")
+print(f"coffee = {np.mean(coffee)}, {np.std(coffee, ddof=1)}")
+print(f"manual: t-stat = {t}, pval = {pval}")
+print(f"scipy: t-stat = {t_sci}, pval = {pval_sci}")
