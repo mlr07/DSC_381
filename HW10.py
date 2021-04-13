@@ -275,7 +275,8 @@ else:
     print("conditions not met... use caution.") 
 
 # %%
-# difference of means for InterferonGamma between 
+# FIXME 1 tail case
+# difference of means for InterferonGamma between
 # h_null = mean_tea == mean_coffee
 # h_alt = mean_tea != mean_coffee
 
@@ -293,14 +294,16 @@ def diff_mean_t_tests(sample1, sample2):
 
     std_err = np.sqrt((sd1**2/n1) + (sd2**2/n2))
     t = ((X_bar1 - X_bar2) - 0) / std_err
-    pval =  (1 - stats.t.cdf(t, df=df)) * 2   # 2 tail
+    pval = stats.t.sf(t, df=df)  # 2 tail
     return t, pval
 
 
 t, pval = diff_mean_t_tests(tea, coffee)
+# FIXME 1 tail case
 t_sci, pval_sci = stats.ttest_ind(a=tea, b=coffee, equal_var=False, nan_policy="omit")
 
 print(f"tea = {np.mean(tea)}, {np.std(tea, ddof=1)}")
 print(f"coffee = {np.mean(coffee)}, {np.std(coffee, ddof=1)}")
 print(f"manual: t-stat = {t}, pval = {pval}")
 print(f"scipy: t-stat = {t_sci}, pval = {pval_sci}")
+# %%
