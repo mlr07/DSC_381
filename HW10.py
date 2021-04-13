@@ -300,7 +300,7 @@ def diff_mean_t_tests(sample1, sample2):
 
 t, pval = diff_mean_t_tests(tea, coffee)
 # FIXME 1 tail case
-t_sci, pval_sci = stats.ttest_ind(a=tea, b=coffee, equal_var=False, nan_policy="omit")
+t_sci, pval_sci = stats.ttest_ind(a=tea, b=coffee, equal_var=False, nan_policy="omit", alternative="greater")
 
 print(f"tea = {np.mean(tea)}, {np.std(tea, ddof=1)}")
 print(f"coffee = {np.mean(coffee)}, {np.std(coffee, ddof=1)}")
