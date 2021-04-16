@@ -278,7 +278,7 @@ else:
 # FIXME 1 tail case
 # difference of means for InterferonGamma between
 # h_null = mean_tea == mean_coffee
-# h_alt = mean_tea != mean_coffee
+# h_alt = mean_tea >= mean_coffee
 
 def diff_mean_t_tests(sample1, sample2):
 
@@ -294,7 +294,7 @@ def diff_mean_t_tests(sample1, sample2):
 
     std_err = np.sqrt((sd1**2/n1) + (sd2**2/n2))
     t = ((X_bar1 - X_bar2) - 0) / std_err
-    pval = stats.t.sf(t, df=df)  # 2 tail
+    pval = stats.t.sf(t, df=df) 
     return t, pval
 
 

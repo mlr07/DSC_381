@@ -119,14 +119,13 @@ print(f"lithium: count = {lithium_count}, sample size = {lithium_sample}")
 runner([0.500-0.167, 0.500-0.167, 0.500-0.167], "6")
 
 
-# FIXME
 # 7
 # find 92% confidence for slope coeff between salary and age
 data = "./data/SalaryGender.csv"
 df = pd.read_csv(data)
 
 # process data for input to statkey
-df[["Salary", "Gender"]].to_csv("./data/Q7_SalaryGender.csv", index=False)
+df[["Salary", "Age"]].to_csv("./data/Q7_SalaryGender.csv", index=False)
 
 # track statkey runs
 runner([0.403-0.097, 0.403-0.098, 0.403-0.099, 0.402-0.101, 0.406-0.099], "7")
