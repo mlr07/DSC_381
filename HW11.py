@@ -89,22 +89,128 @@ else:
 
 # %%
 
+def single_prop_condition(sample, count, q, p0=None):
+    if p0:
+        prop = p0
+    else:
+        prop = count / sample
+
+    n_p = sample * prop
+    n1_p = sample * (1 - prop)
+
+    print(f"Q{q}: Check Single Proportion Conditions")
+    print(f"Sample = {sample}, c = {count}, prop = {prop}")
+    if n_p >= 10 and n1_p >=10:
+        print(f"np = {n_p:.2f} >= 10 and n(1-p) = {n1_p:.2f} >= 10")
+        print("Conditions for single proporiton met!\n")
+    else:
+        print(f"np = {n_p:.2f} < 10 and n(1-p) = {n1_p:.2f} < 10")
+        print("Conditions for single proporiton NOT met!\n")
+
 # 90% CI for single population proportion
+sample, defect = 200, 12
+single_prop_condition(sample=sample, count=defect, q="4")
 
-sample = 200
-defective = 12
-prop = defective / sample
-np = sample * prop
-n1_p = sample * (1 - prop)
+# HT for single proportion: Ho <= 0.06, Ha > 0.06
+p0 = 0.06
+sample, defect = 200, 14
+single_prop_condition(sample=sample, count=defect, q="5", p0=p0)
 
-print(f"Sample = {sample}, c = {defective}, prop = {prop}")
-print(f"np = {np} >= 10 and n(1-p) = {n1_p} >= 10")
+# HT for a single proportion: H0 <= 0.04, Ha > 0.04
+p0 = 0.04
+sample, defect = 200, 12
+single_prop_condition(sample=sample, count=defect, q="6", p0=p0)
 
-if np >= 10 and n1_p >=10:
-    print("Conditions for single proporiton met.")
-    
+# %%
+# curl -o ExerciseHours.csv https://www.lock5stat.com/datasets3e/ExerciseHours.csv
+# HT for difference of means: Ho: mean_m == mean_f, Ha: mean_m != mean_f
+# condition for t-dist: each group n >= 30
+
+df = pd.read_csv("./data/ExerciseHours.csv")
+display(df["Sex"].value_counts())
+
+men = sum(df["Sex"] == "M")
+women = sum(df["Sex"] == "F")
+
+print(f"Men n = {men}, Women n = {women}")
+
+if men >= 30 and women >= 30:
+    print("Conditions for difference of means MET")
 else:
-    print("Conditions for single proporiton NOT met.")
+    print("Conditions for difference of means NOT MET")
 
+# %%
+# curl -o TrafficFlow.csv https://www.lock5stat.com/datasets3e/TrafficFlow.csv
+# difference of means with paired data
+# condition for t-dist: clt or n >= 30 
+df = pd.read_csv("./data/TrafficFlow.csv")
 
+time_diff = df["Difference"]
+len_time_diff = len(time_diff)
+
+print(f"Difference in times n = {len_time_diff}")
+if len_time_diff >= 30:
+    print("Conditions for difference of paried means MET")
+else:
+    print("Conditions for difference of paried means NOT MET")
+
+sns.displot(time_diff, color='darkcyan', bins=8, kde=True)
+plt.title(f"{time_diff.name} n = {len_time_diff}", y=1.015, fontsize=15)
+plt.xlabel(time_diff.name, labelpad=12)
+plt.ylabel("Count", labelpad=12)
+plt.show()
+
+# %%
+# test for association between categories
+# condition for chi**2: each category expected >= 5 
+# from statkey --> there is an equation
+
+desip = {"no":8, "yes":16}
+lith = {"no":8, "yes":16}
+placebo = {"no":8, "yes":16}
+res = []
+for i in [desip, lith, placebo]:
+    for k,v in i.items():
+        if v >= 5:
+            res.append(True)
+        else:
+            res.append(False)
+if all(res) == True:
+    print("Conditions for Chi**2 association test MET")
+else:
+    print("Conditions for Chi**2 association test NOT MET")
+
+# %%
+# curl -o RestaurantTips.csv https://www.lock5stat.com/datasets3e/RestaurantTips.csv
+# test for a difference of means between groups ANOVA
+# condition: clt n >= 30 for each group and SDmax / SDmin < 2
+
+df = pd.read_csv("./data/RestaurantTips.csv")
+server_counts = dict(df["Server"].value_counts())
+server_counts = {k:v for k,v in sorted(server_counts.items(), key=lambda item: item[0])}
+res = []
+
+for k,v in server_counts.items():
+    if v >= 30:
+        res.append(True)
+    else:
+        res.append(False)
+
+if all(res) == True:
+    print("Count conditions for ANOVA MET")
+else:
+    print("Count conditions for ANOVA NOT MET")
+
+pct_tip_std = {}
+for k,v in server_counts.items():
+    server = df[df["Server"] == k]
+    pct_tip_std[k] = server["PctTip"].std()
+
+min_std = min(pct_tip_std.values())
+max_std = max(pct_tip_std.values())
+
+if max_std / min_std < 2.0:
+    print("STD conditions for ANOVE MET")
+else:
+    print("STD conditions for ANOVA NOT MET")
 # %%
