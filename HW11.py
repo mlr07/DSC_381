@@ -270,6 +270,27 @@ else:
 
 # %%
 # 12
+# curl -o Benford.csv https://www.lock5stat.com/datasets3e/Benford.csv
+# right 1-tail chi**2 test for goodness of fit
+# not sure what hypothesis would look like...
+# benford prob provided for each digit (1-9). 
+# do the digit counts for invoices and addresses fit Benford?
+
+df = pd.read_csv("./data/Benford.csv")
+
+b_prob = df["BenfordP"].to_numpy()
+addr = df["Address"].to_numpy()
+invc = df["Invoices"].to_numpy()
+
+# think about this
+addr_b_prob = b_prob * np.sum(addr)
+invc_b_prob = b_prob * np.sum(invc)
+
+addr_chi = sp.chisquare(f_obs=addr, f_exp=addr_b_prob)
+invc_chi = sp.chisquare(f_obs=invc, f_exp=invc_b_prob)
+
+print(f"Address: chi**2 = {addr_chi[0]:.3f}, pval = {addr_chi[1]:.3f}")
+print((f"Invioce: chi**2 = {invc_chi[0]:.3f}, pval = {invc_chi[1]:.3f}"))
 
 # %%
 # 13
