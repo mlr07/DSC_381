@@ -218,7 +218,7 @@ else:
     print("STD conditions for ANOVA NOT MET")
 
 # %%
-# 11
+# 11 (Statkey)
 # curl -o FootballBrain.csv https://www.lock5stat.com/datasets3e/FootballBrain.csv
 # test for difference of mean between groups ANOVA
 # condition: clt n >= 30 for each group and SDmax / SDmin < 2
@@ -293,10 +293,48 @@ print(f"Address: chi**2 = {addr_chi[0]:.3f}, pval = {addr_chi[1]:.3f}")
 print((f"Invioce: chi**2 = {invc_chi[0]:.3f}, pval = {invc_chi[1]:.3f}"))
 
 # %%
-# 13
+# 13 (Statkey)
 # Association between categories --> chi**2
 # condition for chi**2: each category expected >= 5 
 # chi**2-stat = 8.592
 # right 1-tail test: pval = 0.066, alpha = 0.10
 # expected counts all >= 5 except Thursday
 
+# 14
+
+# 15 (Statkey)
+# Association between categories --> chi**2
+# Test that medal preffererd is associated with SAT math or verbal
+# chi**2 stat = 13.662
+# right 1-tail test: pval = 0.0009
+# Ho: medal preferance is not related to SAT, Ha: medal pref is related to SAT
+
+# 16 (Statkey)
+# curl -o TextBookCosts.csv https://www.lock5stat.com/datasets3e/TextbookCosts.csv
+# Ho: mean1 == mean2 == mean3, Ha: one pair of means !=
+# ANOVA for diff means: F-stat = 4.055, n = 40, df: groups = 3, error = 36, total = 39
+# 1-tail test: pval = 0.015 --> do not reject null
+
+# %%
+# 17
+# SE for CI and HT difference in proportions
+# SE CI = sqrt(phat1(1-phat1)/n1 + phat2(1-phat2)/n2)
+# SE HT = sqrt(pbar(1-pbar)/n1 + pbar(1-pbar)/n2)
+
+n_kids_under_12 = 69 
+visit_library_under_12 = 29
+
+n_kids_over_12 = 120
+visit_library_over_12 = 15
+
+phat1 = visit_library_under_12 / n_kids_under_12
+phat2 = visit_library_over_12 / n_kids_over_12
+pbar = (visit_library_under_12 + visit_library_over_12) / (n_kids_under_12 + n_kids_over_12)
+
+ci_std_err = np.sqrt(phat1*(1-phat1)/n_kids_under_12 + phat2*(1-phat2)/n_kids_over_12)
+ht_std_err = np.sqrt(pbar*(1-pbar)/n_kids_under_12 + pbar*(1-pbar)/n_kids_over_12)
+
+print(f"SE for CI: {ci_std_err:.3f}")
+print(f"SE for HT: {ht_std_err:.3f}")
+
+# %%
