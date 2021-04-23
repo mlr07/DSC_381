@@ -94,7 +94,6 @@ data = [2.85, 11.07, 3.84, 7.92, 5.83, 8.81, 12.33, 9.74, 3.38, 21.91]
 n = len(data)
 theta_est = sum(data) / (2*n)
 
-# %%
 # 9 with symfit
 data = np.array([2.85, 11.07, 3.84, 7.92, 5.83, 8.81, 12.33, 9.74, 3.38, 21.91])
 
@@ -111,7 +110,6 @@ print(f"theta mle estimate with symfit: {fit_result.value(theta):.3f}")
 print(f"theta mle estimate with sympy: {theta_est:.3f}")
 # print(f"dist to 3 = {theta_est-3:.3f}")
 # print(f"dist to 6 = {6-theta_est:.3f}")
-
 
 # %%
 # 10 find theta**2 by invariance with theta mle
@@ -136,7 +134,6 @@ display(mle)
 soln = solve(mle, theta)[0]
 display(soln)
 
-# estimate theta with mle and data
 data = np.array([17.47, 9.1, 13.74, 30.68, 41.66, 16.53, 43.44, 21.18, 43.16, 74.17])
 n = len(data)
 a = 3.7
@@ -160,4 +157,21 @@ print(f"theta mle estimate with symfit: {fit_result.value(theta):.3f}")
 # 12 find sqrt(theta) by invariance with theta mle
 theta_sqrt_mle = np.sqrt(theta_est)
 print(f"estimate with sqrt(theta) mle: {theta_sqrt_mle:.3f}")
+
+# %%
+# 13 find 
+theta = symbols("theta", positive=True)
+n = symbols("n", positive=True)
+i = symbols('i', positive=True)
+
+# 13 simfit
+theta = Parameter('theta')
+model = 1 / (2*theta+1)
+
+fit = Fit(model, data, objective=LogLikelihood)
+fit_result = fit.execute()
+
+# print(f"theta mle estimate with sympy: {theta_est:.3f}")
+print(f"theta mle estimate with symfit: {fit_result.value(theta):.3f}")
+
 # %%
