@@ -173,5 +173,3 @@ alt = (Xmax)**2 / 12
 
 print(f"var from theta: {var}")
 print(f"alt var: {alt}")
-
-# %%
