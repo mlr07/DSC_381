@@ -13,9 +13,6 @@ mle = solve(Eq(diff(Product(p**x[i]*(1 - p)**(1 - x[i]), (i, 1, n)), p), 0).doit
 display(mle)
 
 # %%
-from sympy import *
-from IPython.display import display
-
 # 1 find mle for theta
 theta = symbols("theta", positive=True)  # param, unsure on number type
 n = symbols("n", positive=True)  # n random values
@@ -33,5 +30,29 @@ display(mle)
 # solve for theta
 soln = solve(mle, theta)[0]
 display(soln)
+
+# %%
+# 2 find mle for norm(mu, sigma**2)
+theta1 = symbols("theta_1", positive=True)
+theta2 = symbols("theta_2", positive=True)
+n = symbols("n", positive=True)
+i = symbols('i', positive=True)
+x = Function("x")
+L = Function("L")
+
+L_log = -(n/2)*log(theta2)-(n/2)*log(2*pi)-(1/(2*theta2))*Sum((x(i)-theta1)**2, (i, 1, n))
+display(L_log)
+
+mle = Eq(diff(L_log, theta1), 0).doit()
+display(mle)
+
+soln = solve(mle, theta1)
+# display(soln)
+
+mle2 = Eq(diff(L_log, theta2), 0).doit()
+display(mle2)
+
+soln2 = solve(mle2, theta2)[0]
+# display(soln2)
 
 # %%
