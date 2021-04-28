@@ -164,12 +164,14 @@ print(f"estimate with sqrt(theta) mle: {theta_sqrt_mle:.3f}")
 data = np.array([0.7, 0.83, 2.39, 1.98, 3.76, 2.24, 12.44, 7.34, 2.76, 14.03])
 
 Xmax = np.max(data)
-Xmin = np.min(data)
-print(f"mle for uniform = {Xmax}")
+theta = (Xmax-1)/2
+print(f"theta from bounds: {theta}")
 
-# 14 variance by mle for theta
-var_mle = (2*Xmax+1)**2 / 12
-print(f"var from theta mle = {var_mle}")
+# 
+var = (2*theta+1)**2 / 12
+alt = (Xmax)**2 / 12
 
+print(f"var from theta: {var}")
+print(f"alt var: {alt}")
 
 # %%
