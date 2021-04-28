@@ -159,19 +159,17 @@ theta_sqrt_mle = np.sqrt(theta_est)
 print(f"estimate with sqrt(theta) mle: {theta_sqrt_mle:.3f}")
 
 # %%
-# 13 find 
-theta = symbols("theta", positive=True)
-n = symbols("n", positive=True)
-i = symbols('i', positive=True)
+# 13 graphical mle
+# the mle theta is the sample max...
+data = np.array([0.7, 0.83, 2.39, 1.98, 3.76, 2.24, 12.44, 7.34, 2.76, 14.03])
 
-# 13 simfit
-theta = Parameter('theta')
-model = 1 / (2*theta+1)
+Xmax = np.max(data)
+Xmin = np.min(data)
+print(f"mle for uniform = {Xmax}")
 
-fit = Fit(model, data, objective=LogLikelihood)
-fit_result = fit.execute()
+# 14 variance by mle for theta
+var_mle = (2*Xmax+1)**2 / 12
+print(f"var from theta mle = {var_mle}")
 
-# print(f"theta mle estimate with sympy: {theta_est:.3f}")
-print(f"theta mle estimate with symfit: {fit_result.value(theta):.3f}")
 
 # %%
