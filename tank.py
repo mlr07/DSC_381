@@ -11,8 +11,22 @@ def sim_tank_cap(k: int, n: int, runs: int):
     sample_max = np.array([np.max(cap) for cap in caps])
     sample_mean = np.array([np.mean(cap) for cap in caps])
     sample_sd = np.array([np.std(cap) for cap in caps])
-    
+
     return sample_max, sample_mean, sample_sd
+
+
+def sim_k(ks:list, n:int, runs:int):
+    rng = np.random.default_rng()
+    tanks = np.arange(1, n+1)
+    out = []
+    for k in ks:
+        caps = [rng.choice(tanks, k, replace=False) for r in range(runs)]
+        sample_max = np.array([np.max(cap) for cap in caps])
+        xmax_binom = ((k+1)/k) * sample_max
+        out.append(xmax_binom)
+
+    return out
+
 
 k = 5
 n = 1000
@@ -84,5 +98,21 @@ ax[3].legend()
 fig.tight_layout()
 
 # %%
+ks = [5, 25, 45, 60]
+runs = 10000
+n = 1000
 
-# TODO compare k size with xmax binom
+xmax_binom_ks = sim_k(ks= ks, n=n, runs=runs)
+
+fig, ax = plt.subplots(figsize=(12, 10))
+
+for k in range(len(xmax_binom_ks)):
+    ax.hist(xmax_binom_ks[k], 10, density=False, alpha=0.75, label=f"k = {ks[k]}")
+
+ax.axvline(n, color='black', linestyle='dashed', linewidth=3, label="N Tanks")
+ax.set_xlabel("xmax binom")
+ax.set_ylabel("simulations")
+ax.set_title("decrease in variance of xmax binom with increase in k captured tanks", fontsize=20)
+ax.legend()
+fig.tight_layout()
+
