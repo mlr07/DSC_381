@@ -195,6 +195,7 @@ df = pd.read_csv("./data/RestaurantTips.csv")
 server_counts = dict(df["Server"].value_counts())
 server_counts = {k:v for k,v in sorted(server_counts.items(), key=lambda item: item[0])}
 res = []
+pct_tip_std = {}
 
 for k,v in server_counts.items():
     if v >= 30:
@@ -213,7 +214,7 @@ else:
     print("Count conditions for ANOVA NOT MET")
 
 if max_std / min_std < 2.0:
-    print("STD conditions for ANOVE MET")
+    print("STD conditions for ANOVA MET")
 else:
     print("STD conditions for ANOVA NOT MET")
 
@@ -242,6 +243,7 @@ sns.catplot(x="Group", y="Cogniton", kind="violin", inner="stick", data=df)
 # %%
 cognit = df[df['Cogniton'].notnull()] 
 cognit_counts = dict(cognit["Group"].value_counts())
+hipp_std = {}
 
 res = []
 cognit_std = {}
