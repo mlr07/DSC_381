@@ -4,8 +4,7 @@ from IPython.display import display
 import numpy as np
 
 from symfit import Parameter, Variable, exp, parameters, variables, Fit
-from symfit.core.objectives import LogLikelihood 
-import numpy as np
+from symfit.core.objectives import LogLikelihood
 
 # %%
 # symfit example
