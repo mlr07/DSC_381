@@ -28,8 +28,18 @@ p1_t_alt = solve(p1_min_alt, t)[0]
 display(p1_t_alt) 
 
 #%%
-
 # joint distribution --> HW7
+lamb = symbols("lambda", positive=True)
+r = symbols("r", positive=True)
+x = symbols("x", positive=True)
+
+fy = lamb*exp(-lamb*(r+1)*x)
+display(fy)
+
+Fy = integrate(fy, x)
+display(Fy)
+
+
 # CLT --> HW8
 
 # stats portion
