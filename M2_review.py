@@ -1,6 +1,9 @@
 #%%
 from sympy import *
 from IPython.display import display
+import numpy as np
+
+#%%
 # prob portion
 
 # MGF --> HW6
@@ -32,12 +35,45 @@ display(p1_t_alt)
 lamb = symbols("lambda", positive=True)
 r = symbols("r", positive=True)
 x = symbols("x", positive=True)
+y = symbols("y", positive=True)
+s, t = symbols("s t")
+
 
 fy = lamb*exp(-lamb*(r+1)*x)
 display(fy)
 
 Fy = integrate(fy, x)
 display(Fy)
+
+r_ = Eq((1-y)/y, r)
+display(r_)
+
+y_ = solve(r_, r+1)[0]
+display(y_)
+
+# Q4 1a
+F_x1_x2 = lamb*exp(-lamb*s)
+display(F_x1_x2)
+
+# add bound for s
+F_x1_x2_ = integrate(F_x1_x2, (x, 0, s))
+display(F_x1_x2_)
+
+# eval F(x1, x2) with lambda = 2.0, s = 3.0
+result = 2.0*3.0*np.exp(-2.0*3.0)
+display(result)
+
+# Q4 1b
+F_t2_x3 = exp(-lamb*(s-t))*lamb**2*t*exp(-lamb*t)
+display(F_t2_x3)
+
+# add bound for s
+F_t2_x3 = integrate(F_t2_x3, (t, 0, s))
+display(F_t2_x3)
+
+result = ((2.0*3.0)**2)/2*np.exp(-2.0*3.0)
+display(result)
+
 
 
 # CLT --> HW8
