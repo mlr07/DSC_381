@@ -1,3 +1,5 @@
+#%%
+
 import numpy as np
 import pacal as pc
 from sympy import symbols, Integral, Derivative, Eq
@@ -70,3 +72,4 @@ display(ans_a)
 
 # 6: ans = b, proof
 
+# %%

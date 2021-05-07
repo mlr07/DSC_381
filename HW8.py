@@ -1,3 +1,4 @@
+#%%
 import numpy as np
 import scipy.stats as st
 from sympy.stats import Die, E, variance
@@ -53,3 +54,5 @@ Pr_Xn = st.norm.cdf(Z)
 print(f"E[79 rolls of 6 sided die] = {E_Xn:.3f}")
 print(f"Var[79 rolls of 6 sided die] = {Var_Xn:.3f}")
 print(f"Pr(Xn < 300) by CLT: Z = {Z:.3f}, Pr = {Pr_Xn:.3f}")
+
+# %%
