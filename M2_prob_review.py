@@ -84,12 +84,4 @@ q = (1- st.norm.cdf(2))
 display(q)
 
 
-# stats portion
-# inference --> HW4
-# simulation --> HW9
-# theoretical distn --> HW10
-# chi**2 and ANOVA --> HW11
-# MLE --> HW12
-# exp families --> HW13
 
-# %%
