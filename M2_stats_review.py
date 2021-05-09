@@ -8,11 +8,8 @@
 # QZ5 and QZ6
 
 # %%
-import pandas as pd
 import numpy as np
 import scipy.stats as stats
-from statistics import mean
-from IPython.display import Latex, display
 
 def runner(runs:list=None, q:str=None) -> None:
     """
@@ -23,21 +20,15 @@ def runner(runs:list=None, q:str=None) -> None:
     """
 
     if runs and len(runs) > 0:
-        print(f"Q{q}: {len(runs)} run mean = {mean(runs):.4f}")
+        print(f"Q{q}: {len(runs)} run mean = {np.mean(runs):.4f}")
     else:
         print("No data")
+
 # %%
 # 1 90%CI for pop sd from atlanta commutes: CI for single param
 runner([23.574-17.846, 23.643-17.814, 23.632-17.848, 23.616-17.884], 1)
 
-# 2 proportion of blackberry users from CellPhoneTypes: one category descriptive
-# Type, Frequency
-# Android, 458
-# iPhone, 437
-# Blackberry, 141
-# Std. Cell Phone, 924
-# No Cell Phone, 292
-
+# 2 proportion of blackberry users from CellPhoneTypes: one category
 total_phones = 458+437+141+924+292
 prop_bb = 141 / total_phones
 print(total_phones, prop_bb)
@@ -55,4 +46,24 @@ runner([3693.775-2713.625, 3688.750-2713.425, 3693.125-2714.025], 5)
 # 6 difference in means hypothesis test: Ho: mu1 == mu2, Ha: mu1 != mu2, 2 tail
 runner([0.0037*2, 0.0024*2, 0.0019*2, 0.0017*2, 0.003*2], 6)
 
+# %%
+# 7 consider data needed to form a CI for voter sentiment
+# A margin of error from 95% CI
+ci = (1 - 0.95) / 2  # two tail case
+z_star = stats.norm.ppf(1-ci)
+n = 200
+p_sample = 118 / 200
+me = z_star / np.sqrt(n / (p_sample*(1-p_sample)))  # manipulate proportion sample size eqn
+print(f"ME at 95%CI = {me:.3f}, {z_star:.3f}")
+
+# B sample size for ME of 0.04
+me = 0.04
+n = np.ceil((z_star/me)**2 * p_sample*(1-p_sample))  # sample size for proportion eqn
+print(f"Sample n needed for {me} ME = {n:.3f}")
+
+# C a sample of voter sentiment was known beforehand (118/200). so this data was used for p_sample 
+# over the standard 0.5.
+
+# 8 90%CI for the slope coefficient between pH and mercury
+runner([-0.111-(-0.199), -0.110-(-0.198), -0.110-(-0.196)], 8)
 # %%
