@@ -3,6 +3,7 @@
 # simulation --> HW9
 # theoretical distn --> HW10
 # chi**2 and ANOVA --> HW11
+
 # MLE --> HW12
 # exp families --> HW13
 # QZ5 and QZ6
@@ -66,4 +67,24 @@ print(f"Sample n needed for {me} ME = {n:.3f}")
 
 # 8 90%CI for the slope coefficient between pH and mercury
 runner([-0.111-(-0.199), -0.110-(-0.198), -0.110-(-0.196)], 8)
+
+# 9 test for association between gender and true love with chi**2
+# need to drop "don't know" category
+# df is based on number of variables being cross classified
+c = 2
+r = 2
+df = (r-1)*(c-1)
+chi_sq_stat = 7.764
+runner([0.0052, 0.0048, 0.0049], 9)
+print(f"Degrees of freedom: {df}")
+
+# 10 how strongly are ants attracted to different types of sandwhiches?
+# Ho: mean1 == mean2 == mean3, Ha: one pair of means !=
+f_stat = 5.627
+k = 2  # number of variables
+n = 24  # sample size
+df_p_groups = k
+df_q_error = n-k-1
+print(f"DF = groups: {df_p_groups}, errors: {df_q_error}")
+runner([0.014, 0.013, 0.014], 10)
 # %%
