@@ -79,3 +79,6 @@ count = sum(women["Status"]==0)
 print(sample)
 print(count)
 print(count/sample)
+
+# %%
+    
