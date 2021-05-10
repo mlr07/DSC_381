@@ -33,7 +33,7 @@ display(mle)
 # %%
 # 1 find mle for theta
 # build log likelihood for theta
-L_log_theta = expand_log(log((theta+1)**n))+theta*Sum(log(X(i)), (i, 1, n))
+L_log_theta = expand_log(log((theta+1)**n))+theta*Sum(log(x(i)), (i, 1, n))
 display(L_log_theta)
 
 # differentiate and set equal to zero
@@ -107,8 +107,6 @@ fit_result = fit.execute()
 
 print(f"theta mle estimate with symfit: {fit_result.value(theta):.3f}")
 print(f"theta mle estimate with sympy: {theta_est:.3f}")
-# print(f"dist to 3 = {theta_est-3:.3f}")
-# print(f"dist to 6 = {6-theta_est:.3f}")
 
 # %%
 # 10 find theta**2 by invariance with theta mle
@@ -172,3 +170,5 @@ alt = (Xmax)**2 / 12
 
 print(f"var from theta: {var}")
 print(f"alt var: {alt}")
+
+# %%
