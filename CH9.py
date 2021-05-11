@@ -1,3 +1,5 @@
+# %%
+
 from scipy import integrate
 import numpy as np
 
@@ -36,6 +38,7 @@ X1 = rng.normal(mu, sigma, n)
 
 print(np.mean((X1 > 2) & (X1 < 5)))
 
+#%%
 # by integration
 mu=3
 sig=3
@@ -60,3 +63,5 @@ x, t, mu, sigma = symbols("x t mu sigma")
 # expr = 1 / (sqrt((2*pi*sigma)))
 expr = 1/(sigma*sqrt(2*pi))*(exp(-(t-mu)**2/(2*sigma**2)))
 
+
+# %%
