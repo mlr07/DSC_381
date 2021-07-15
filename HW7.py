@@ -71,5 +71,4 @@ display(pdf)
 display(ans_a)
 
 # 6: ans = b, proof
-
 # %%
